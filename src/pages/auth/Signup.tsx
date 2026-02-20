@@ -31,6 +31,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [shake, setShake] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const strength = getPasswordStrength(password);
 
@@ -64,9 +65,35 @@ export default function Signup() {
       return;
     }
 
-    // Redirect based on role
-    navigate(role === "teacher" ? "/dashboard/teacher" : "/dashboard/student");
+    setSuccess(true);
   };
+
+  if (success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="relative z-10 w-full max-w-md mx-4 glass rounded-2xl p-8 border border-white/20 shadow-2xl text-center"
+        >
+          <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle className="w-8 h-8 text-emerald-500" />
+          </div>
+          <h2 className="text-2xl font-bold text-foreground mb-2">Check your email!</h2>
+          <p className="text-muted-foreground text-sm mb-6">
+            We've sent a confirmation link to <strong className="text-foreground">{email}</strong>. Click the link to activate your account.
+          </p>
+          <Link
+            to="/auth/login"
+            className="inline-block px-6 py-2.5 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-medium text-sm hover:shadow-lg hover:shadow-primary/30 transition-all"
+          >
+            Go to Login
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background">
