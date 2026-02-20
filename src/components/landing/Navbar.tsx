@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navLinks = [
   { label: "Features", href: "#features" },
@@ -57,18 +58,18 @@ export default function Navbar() {
 
         {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <a
-            href="#login"
+          <Link
+            to="/auth/login"
             className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             Sign In
-          </a>
-          <a
-            href="#signup"
+          </Link>
+          <Link
+            to="/auth/signup"
             className="text-sm font-semibold px-5 py-2.5 rounded-xl bg-gradient-primary text-white hover:opacity-90 transition-all duration-200 pulse-glow"
           >
             Get Started Free
-          </a>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -99,12 +100,12 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="#signup"
+            <Link
+              to="/auth/signup"
               className="text-sm font-semibold px-5 py-2.5 rounded-xl bg-gradient-primary text-white text-center"
             >
               Get Started Free
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>
