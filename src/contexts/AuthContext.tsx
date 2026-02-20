@@ -69,25 +69,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: window.location.origin },
+      options: {
+        emailRedirectTo: window.location.origin,
+        data: { name, role: selectedRole },
+      },
     });
 
     if (error) return { error };
     if (!data.user) return { error: new Error("Signup failed") };
-
-    // Insert profile
-    const { error: profileError } = await supabase
-      .from("profiles")
-      .insert({ user_id: data.user.id, name, email });
-
-    if (profileError) return { error: profileError };
-
-    // Insert role
-    const { error: roleError } = await supabase
-      .from("user_roles")
-      .insert({ user_id: data.user.id, role: selectedRole });
-
-    if (roleError) return { error: roleError };
 
     setRole(selectedRole);
     return { error: null };
